@@ -13,6 +13,7 @@
  * limitations under the License.
  */
 
+# run $terraform import google_compute_global_address.private_ip_address private-ip-address 
 resource "google_compute_global_address" "private_ip_address" {
   provider = google-beta
 
@@ -36,7 +37,8 @@ resource "google_sql_database_instance" "instance" {
 
   name   = "${var.project_id}-mysql"
   region = "us-central1"
-
+  database_version = "[DB_VERSION]"
+  
   depends_on = [google_service_networking_connection.private_vpc_connection]
 
   settings {
@@ -61,6 +63,7 @@ resource "google_sql_user" "users" {
 }
 
 provider "google-beta" {
+  project = "${var.project_id}"
   region = "us-central1"
   zone   = "us-central1-a"
 }
